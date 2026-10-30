@@ -1,0 +1,29 @@
+#ifndef ALGORITMOS_H
+#define ALGORITMOS_H
+
+
+struct estatisticas
+{
+  int comparacoes;
+  int trocas;
+};
+
+int compara(int a, int b, struct estatisticas *e);
+
+void troca(int vetor[], int i, int j, struct estatisticas *e);
+
+void particao(int vetor[], int esq, int dir, int *pos_pivo, struct estatisticas *e);
+
+void quicksort(int vetor[], int esq, int dir, struct estatisticas *e);
+
+void insertsort(int vetor[], int tam, struct estatisticas *e);
+
+long sorteianum(long min, long max);
+
+const char *compara_algoritmos(int tam);
+
+void sacodeheap_int(int n, int vetor[], int indice, struct estatisticas *e);
+
+void heapsort(int vetor[], int n, struct estatisticas *e);
+
+#endif

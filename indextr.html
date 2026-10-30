@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alg2 - Heap</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="scripts.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  </head>
+  <body>
+    <div class="containerMain">
+      <!--container principal -->
+      <h1 class="tituloHeader">✈️ VoeHeap - Algoritmos 2</h1>
+
+      <!-- Container Inicializar Heap -->
+      <div class="containerBox">
+        <p class="tituloBox">Inicializar Heap</p>
+        <div class="linhaBox">
+          <p>Capacidade Máxima (N):</p>
+          <input
+            type="text"
+            class="lerN"
+            placeholder="N"
+          />
+          <button class="botaoFuncao">InicHeap</button>
+        </div>
+      </div>
+      
+      <!-- Container Inserir Heap -->
+      <div class="containerBox">
+        <p class="tituloBox">Inserir Passageiro</p>
+        <div class="linhaBox">
+          <input
+            type="text"
+            class="infoPassageiro"
+            placeholder="Nome do Passageiro"
+          />
+          <button class="botaoFuncao">Inserir</button>
+        </div>
+      </div>
+
+      <!-- Container Remove Heap -->
+      <div class="containerBox">
+        <p class="tituloBox">Remover Passageiro</p>
+        <p>Remover o passageiro de maior prioridade</p>
+        <button class="botaoFuncao">Remover</button>
+      </div>
+
+      <!-- Container Funcoes -->
+      <div class="containerBox">
+        <p class="tituloBox">Funções do Heap</p>
+        <button class="botaoFuncao">Checa Heap</button>
+        <button class="botaoFuncao">HeapFy</button>
+        <button class="botaoFuncao">HeapSort</button>
+      </div>
+
+      <!-- Container Imprime Heap -->
+      <div class="containerBox">
+        <p class="tituloBox">Imprime Heap</p>
+      </div>
+
+      <!-- Container Comparacoes -->
+      <div class="containerBox">
+        <p class="tituloBox">Compara Algoritmos</p>
+        <button class="botaoFuncao">Gerar Vetor Aleatório</button>
+        <table class="comparacoes">
+          <thead>
+            <tr>
+              <th>HeapSort</th>
+              <th>QuickSort</th>
+              <th>InsertionSort</th>
+            </tr>
+          </thead>
+          <tbody >
+            <tr>
+              <td> 17329 comp.</td>
+              <td> 12139 comp.</td>
+              <td> 261443 comp.</td>
+            </tr>
+            <tr>
+              <td>9344 trocas</td>
+              <td>3378 trocas</td>
+              <td>260427 trocas</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Container Log-->
+      <div class="containerBox">
+        <p class="tituloBox">Log de Execução</p>
+        <!-- Área de log -->
+        <div class="terminalLog">
+          <p>================================ TERMINAL ================================</p>
+          <p>Inicio da execucao: Trabalho que implementa a estrutura de Dados Heap.</p>
+          <p>Prof. Elias P. Duarte Jr.  -  Disciplina Algoritmos e Estruturas de Dados II </p>
+          <p>============================== INICIO DO LOG =============================</p>
+          <p>Heap iniciado com tamanho maximo de 4 elementos.</p>
+          <p>Passageiro inserido - Nome: Joao | Prioridade: 2</p>
+          <p>LISTA DE PASSAGEIROS:</p>
+          <p>[0] Nome: Joao | Prioridade: 2</p>
+          <p>Passageiro inserido - Nome: Carlos | Prioridade: 3</p>
+          <p>LISTA DE PASSAGEIROS:</p>
+          <p>[0] Nome: Carlos | Prioridade: 3</p>
+          <p>[1] Nome: Joao | Prioridade: 2</p>
+          <p>==========================================================================</p>
+        </div>
+      </div>
+      <!-- Container Arquivos C e Relatórios -->
+      <div class="containerBox">
+        <p class="tituloBox">Lista de Arquivos</p>
+        <p class="arquivosC">
+          <a href="arquivosC\algoritmos.c.txt ">algoritmos.c</a>
+          <a href="arquivosC\algoritmos.h.txt">algoritmos.h</a>
+          <a href="arquivosC\compara.c.txt">compara.c</a>
+          <a href="arquivosC\heap.c.txt">heap.c</a>
+          <a href="arquivosC\heap.h.txt">heap.h</a>
+        </p>
+        <p class="arquivosC">
+          <a href="arquivosC\main.c.txt">main.c</a>
+          <a href="arquivosC\menu.c.txt">menu.c</a>
+          <a href="log_alg2.txt">log</a>
+          <a href="relatorio.odt">relatorio</a>
+        </p>
+      </div>
+      <footer>
+        <div class="containerBox">
+          <div>
+            <p class="comparacoes">-RENAN RIBEIRO FEITOSA DA CRUZ</p>
+            <p class="comparacoes">-PEDRO HENRIQUE NERES M. DA SILVA</p>
+          </div> 
+        </div>
+      </footer>
+    </div>
+  </body>
+
+  
+</html>

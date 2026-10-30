@@ -1,0 +1,160 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+
+#include "heap.h"
+
+int main(){
+    srand(time(NULL));
+
+    puts("============================================================================="); 
+    puts("Inicio da execucao: Trabalho que implementa a estrutura de Dados Heap.");
+    puts("Prof. Elias P. Duarte Jr.  -  Disciplina Algoritmos e Estruturas de Dados II");
+    puts("============================================================================="); 
+
+    int resultado; //retorno das funcoes
+    int capacidade_maxima; //capacidade maxima no heap
+    struct estatisticas e_heap;
+    struct passageiro meu_passageiro; //passageiro removido
+    struct passageiro *copia_heap; //copia do vetor para o heapsort
+    int n_aleat = 1024;  //tamanho 1024 para ordenar o vetor
+    const char* melhor_alg; //recebe o nome do melhor algoritmo 
+
+    printf("Insira a quantidade maxima de passageiros: ");
+    do scanf("%d", &capacidade_maxima);
+      while (capacidade_maxima <= 0);
+
+    //Inicio do Log
+    printf("=============================== INICIO DO LOG =============================== \n");
+    struct heap *meu_heap = inicheap(capacidade_maxima);
+
+
+    //TESTE 1
+
+    printf("\n=============================== TESTE 1 ===============================\n");
+
+    //Insere os passageiros
+    resultado = insereheap(meu_heap, "Joao");
+    resultado = insereheap(meu_heap, "Maria");
+    resultado = insereheap(meu_heap, "Pedro");
+    resultado = insereheap(meu_heap, "Renan");
+    resultado = insereheap(meu_heap, "Ana");
+    printf("\n");
+
+    //Imprime os passageiros atualmente no Heap
+    imprimeheap(meu_heap);
+    printf("\n");
+
+    //Checa o Heap
+    checaheap(meu_heap);
+    printf("\n");
+
+    //Executa o Heapfy a partir do ultimo elemento inserido
+    heapfy(meu_heap, meu_heap->tam - 1, &e_heap);
+
+    //Checa o Heap novamente
+    checaheap(meu_heap);
+    printf("\n");
+
+    //Testa a insercao com o Heap cheio
+    resultado = insereheap(meu_heap, "Passageiro-Extra");
+    printf("\n");
+
+    //Imprime o Heap apos a tentativa de insercao
+    imprimeheap(meu_heap);
+    printf("\n");
+
+    //Remove os passageiros em ordem de prioridade
+    while (meu_heap->tam > 0)
+    {
+        meu_passageiro = removeheap(meu_heap);
+        imprimeheap(meu_heap);
+        printf("\n");
+    }
+
+    //Testa a remocao com o Heap vazio
+    meu_passageiro = removeheap(meu_heap);
+
+    //Verifica o Heap vazio
+    checaheap(meu_heap);
+    imprimeheap(meu_heap);
+
+    //Libera a memoria do Heap
+    destroiheap(meu_heap);
+
+
+    //TESTE 2
+
+    printf("\n=============================== TESTE 2 ===============================\n");
+
+    //Inicializa um novo Heap para o teste de ordenacao
+    meu_heap = inicheap(capacidade_maxima);
+
+    if (meu_heap == NULL)
+    {
+        printf("ERRO: Nao foi possivel inicializar o Heap.\n");
+        return(1);
+    }
+
+    //Insere os passageiros
+    resultado = insereheap(meu_heap, "Joao");
+    resultado = insereheap(meu_heap, "Maria");
+    resultado = insereheap(meu_heap, "Pedro");
+    resultado = insereheap(meu_heap, "Renan");
+    resultado = insereheap(meu_heap, "Ana");
+
+    printf("\n");
+
+    //Imprime o Heap original
+    printf("HEAP ORIGINAL:\n");
+    imprimeheap(meu_heap);
+    printf("\n");
+
+    //Executa o HeapSort em uma copia do vetor original
+    if (meu_heap->tam > 0)
+    {
+      copia_heap = (struct passageiro*) malloc((size_t)meu_heap->tam * sizeof(struct passageiro));
+
+      memcpy(copia_heap, meu_heap->elementos, (size_t)meu_heap->tam * sizeof(struct passageiro));
+
+      heapsort_passageiros(copia_heap, meu_heap->tam, &e_heap);
+
+      //Imprime o vetor ordenado
+      printf("\nVETOR ORDENADO POR PRIORIDADE:\n");
+
+      for (int i = 0; i < meu_heap->tam; i++)
+        printf("[%d] Nome: %s | Prioridade: %d\n", i, copia_heap[i].nome, copia_heap[i].prioridade);
+
+      free(copia_heap);
+    }
+    
+
+    printf("\n");
+
+    //Verifica se o Heap original permanece organizado apos o HeapSort
+    checaheap(meu_heap);
+    imprimeheap(meu_heap);
+
+    //Remove os passageiros em ordem de prioridade
+    printf("REMOCAO DOS PASSAGEIROS:\n\n");
+
+    while (meu_heap->tam > 0)
+    {
+        meu_passageiro = removeheap(meu_heap);
+    }
+
+    //Libera a memoria do Heap
+    destroiheap(meu_heap);
+
+    //Executa a comparacao dos algoritmos de ordenação
+    printf("COMPARACAO DE ALGORITMOS:\n");
+
+    // realiza comparação entre os algoritmos
+    melhor_alg = compara_algoritmos(n_aleat);
+    if (melhor_alg != NULL)
+        printf("Melhor algoritmo: %s\n\n", melhor_alg);
+
+    printf("\n=============================== FIM DO LOG ===============================\n");
+    return(0);
+}

@@ -1,0 +1,144 @@
+=============================================================================
+Inicio da execucao: Trabalho que implementa a estrutura de Dados Heap.
+Prof. Elias P. Duarte Jr.  -  Disciplina Algoritmos e Estruturas de Dados II
+=============================================================================
+Insira a quantidade maxima de passageiros: 4
+============================== INICIO DO LOG 1 ============================== 
+Heap iniciado com tamanho maximo de 4 elementos.
+
+Passageiro inserido - Nome: Joao | Prioridade: 2
+LISTA DE PASSAGEIROS:
+[0] Nome: Joao | Prioridade: 2
+
+Passageiro inserido - Nome: Carlos | Prioridade: 3
+LISTA DE PASSAGEIROS:
+[0] Nome: Carlos | Prioridade: 3
+[1] Nome: Joao | Prioridade: 2
+
+Passageiro inserido - Nome: Pedro | Prioridade: 2
+Passageiro inserido - Nome: Renan | Prioridade: 1
+LISTA DE PASSAGEIROS:
+[0] Nome: Carlos | Prioridade: 3
+[1] Nome: Joao | Prioridade: 2
+[2] Nome: Pedro | Prioridade: 2
+[3] Nome: Renan | Prioridade: 1
+
+ERRO: Impossivel inserir elemento, Heap com capacidade maxima
+
+LISTA DE PASSAGEIROS:
+[0] Nome: Carlos | Prioridade: 3
+[1] Nome: Joao | Prioridade: 2
+[2] Nome: Pedro | Prioridade: 2
+[3] Nome: Renan | Prioridade: 1
+
+Passageiro removido - Nome: Carlos | Prioridade: 3
+LISTA DE PASSAGEIROS:
+[0] Nome: Joao | Prioridade: 2
+[1] Nome: Renan | Prioridade: 1
+[2] Nome: Pedro | Prioridade: 2
+
+Passageiro removido - Nome: Joao | Prioridade: 2
+LISTA DE PASSAGEIROS:
+[0] Nome: Pedro | Prioridade: 2
+[1] Nome: Renan | Prioridade: 1
+
+Passageiro removido - Nome: Pedro | Prioridade: 2
+LISTA DE PASSAGEIROS:
+[0] Nome: Renan | Prioridade: 1
+
+Passageiro removido - Nome: Renan | Prioridade: 1
+ERRO: Sem passageiros
+
+Heap destruido
+
+================ Comparacoes em Vetor Aleatorio (1024 itens) ================ 
+
+======= HeapSort ==========
+17329 Comparacoes
+9344 Trocas
+
+======= QuickSort ==========
+12139 Comparacoes
+3378 Trocas
+
+======= Insertion ==========
+261443 Comparacoes
+260427 Trocas
+
+=============================================================================
+ O melhor algoritmo nesse teste foi: Quicksort (Total de operacoes: 15517)
+=============================================================================
+
+
+
+
+
+=============================================================================
+Inicio da execucao: Trabalho que implementa a estrutura de Dados Heap.
+Prof. Elias P. Duarte Jr.  -  Disciplina Algoritmos e Estruturas de Dados II
+=============================================================================
+Insira a quantidade maxima de passageiros: 4
+============================== INICIO DO LOG 2 ============================== 
+Heap iniciado com tamanho maximo de 4 elementos.
+
+Passageiro inserido - Nome: Beatriz | Prioridade: 3
+Passageiro inserido - Nome: Alexandre | Prioridade: 4
+Passageiro inserido - Nome: Camila | Prioridade: 2
+LISTA DE PASSAGEIROS:
+[0] Nome: Alexandre | Prioridade: 4
+[1] Nome: Beatriz | Prioridade: 3
+[2] Nome: Camila | Prioridade: 2
+
+Passageiro removido - Nome: Alexandre | Prioridade: 4
+LISTA DE PASSAGEIROS:
+[0] Nome: Beatriz | Prioridade: 3
+[1] Nome: Camila | Prioridade: 2
+
+Passageiro inserido - Nome: Daniela | Prioridade: 2
+Passageiro inserido - Nome: Eduardo | Prioridade: 2
+LISTA DE PASSAGEIROS:
+[0] Nome: Beatriz | Prioridade: 3
+[1] Nome: Camila | Prioridade: 2
+[2] Nome: Daniela | Prioridade: 2
+[3] Nome: Eduardo | Prioridade: 2
+
+ERRO: Impossivel inserir elemento, Heap com capacidade maxima
+
+LISTA DE PASSAGEIROS:
+[0] Nome: Beatriz | Prioridade: 3
+[1] Nome: Camila | Prioridade: 2
+[2] Nome: Daniela | Prioridade: 2
+[3] Nome: Eduardo | Prioridade: 2
+
+Passageiro removido - Nome: Beatriz | Prioridade: 3
+Passageiro removido - Nome: Eduardo | Prioridade: 2
+LISTA DE PASSAGEIROS:
+[0] Nome: Daniela | Prioridade: 2
+[1] Nome: Camila | Prioridade: 2
+
+Passageiro inserido - Nome: Gabriel | Prioridade: 2
+LISTA DE PASSAGEIROS:
+[0] Nome: Daniela | Prioridade: 2
+[1] Nome: Camila | Prioridade: 2
+[2] Nome: Gabriel | Prioridade: 2
+
+================ Comparacoes em Vetor Aleatorio (1024 itens) ================ 
+
+======= HeapSort ==========
+17320 Comparacoes
+9331 Trocas
+
+======= QuickSort ==========
+12239 Comparacoes
+3408 Trocas
+
+======= Insertion ==========
+269277 Comparacoes
+268260 Trocas
+
+=============================================================================
+ O melhor algoritmo nesse teste foi: Quicksort (Total de operacoes: 15647)
+=============================================================================
+
+
+

@@ -1,0 +1,149 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+#include "heap.h"
+
+
+int main(void)
+{
+  struct heap *heap;
+  struct estatisticas e;
+  struct passageiro *copia;
+  int capacidade, opcao, i;
+  char nome[TAM_NOME];
+
+  srand(time(NULL));
+
+  printf("=============================================================================\n"); 
+  printf("Inicio da execucao: Trabalho que implementa a estrutura de Dados Heap.\n");
+  printf("Prof. Elias P. Duarte Jr.  -  Disciplina Algoritmos e Estruturas de Dados II\n");
+  printf("=============================================================================\n"); 
+
+  printf("Insira a capacidade maxima de passageiros: ");
+  do scanf("%d", &capacidade);
+    while (capacidade <= 0);
+
+  heap = inicheap(capacidade);
+  if (heap == NULL)
+  {
+    printf("ERRO AO INICIAR VETOR!\n");
+    return 1;
+  }
+
+  do
+  {
+    printf("|=============================== MENU DE OPERACOES ===============================\n\n");
+    printf("|1  - Inserir passageiro\n");
+    printf("|2  - Remover passageiro\n");
+    printf("|3  - Imprimir lista de passageiros\n");
+    printf("|4  - Verificar se o vetor e um Heap\n");
+    printf("|5  - Executar Heapfy\n");
+    printf("|6  - Ordenar passageiros (HeapSort)\n");
+    printf("|7  - Comparar algoritmos de ordenacao\n");
+    printf("|0  - Encerrar programa\n\n");
+
+    printf("ESCOLHA UMA OPCAO: ");
+    scanf("%d", &opcao);
+
+    switch (opcao)
+    {
+      case 1:  //INSERE
+        if (heap->tam == heap->capacidade)
+        {
+          printf("ERRO: CAPACIDADE MAXIMA ATINGIDA\n");
+          break;
+        }
+
+        printf("Nome do passageiro: ");
+        scanf(" %49[^\n]", nome); //usar pra permitir leitura de nomes com espaco
+
+        insereheap(heap, nome);
+        break;
+
+
+      case 2:  //REMOVE
+        if (heap->tam == 0)
+        {
+          printf("ERRO: SEM PASSAGEIROS\n");
+          break;
+        }
+
+        removeheap(heap);
+        break;
+
+
+      case 3:  //IMPRIME
+        imprimeheap(heap);
+        break;
+
+
+      case 4:  //CHECA
+        checaheap(heap);
+        break;
+
+
+      case 5:  //HEAPFICA
+        if (heap->tam == 0)
+        {
+          printf("ERRO: SEM PASSAGEIROS\n");
+          break;
+        }
+
+        heapfy(heap, heap->tam - 1, &e);
+        break;
+
+
+      case 6:  //HEAPSORT
+        if (heap->tam == 0)
+        {
+          printf("ERRO: SEM PASSAGEIROS\n");
+          break;
+        }
+
+        copia = malloc(heap->tam * sizeof(struct passageiro));
+
+        if (copia == NULL)
+        {
+          printf("Erro de memoria\n");
+          break;
+        }
+
+        memcpy(copia, heap->elementos,heap->tam * sizeof(struct passageiro));
+
+        e.comparacoes = 0;
+        e.trocas = 0;
+
+        heapsort_passageiros(copia, heap->tam, &e);
+
+        printf("\nVETOR ORDENADO POR PRIORIDADE:\n");
+
+        for (int i = 0; i < heap->tam; i++)
+        {
+          printf("[%d] Nome: %s | Prioridade: %d\n",
+          i, copia[i].nome, copia[i].prioridade);
+        }
+
+        free(copia);
+        break;
+
+
+      case 7: // COMPARACAO DOS ALGORITMOS
+        compara_algoritmos(1024);
+        break;
+
+
+      case 0: //ENCERRA
+        printf("\nEMBARQUE EM ENCERRAMENTO, ENCERRANDO PROGRAMA\n");
+        break;
+
+      default:
+        printf("\nOPCAO INVALIDA\n");
+    }
+
+  } while (opcao != 0);
+
+  destroiheap(heap);
+
+  return 0;
+}

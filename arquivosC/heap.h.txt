@@ -1,0 +1,41 @@
+#ifndef HEAP_H
+#define HEAP_H
+
+#include "algoritmos.h"
+
+#define TAM_NOME 50
+
+struct passageiro
+{
+  char nome[TAM_NOME];
+  int prioridade;
+};
+
+struct heap
+{
+  struct passageiro *elementos;
+  int capacidade;
+  int tam;
+};
+
+void sacodeheap(struct heap *heap, int indice);
+
+void troca_passageiros( struct passageiro *a, struct passageiro *b);
+
+struct heap *inicheap(int capacidade);
+
+void destroiheap(struct heap *heap);
+
+int insereheap(struct heap *heap, const char *nome);
+
+struct passageiro removeheap(struct heap *heap);
+
+void heapfy(struct heap *heap, int indice, struct estatisticas *e);
+
+int checaheap(struct heap *heap);
+
+void imprimeheap(struct heap *heap);
+
+void heapsort_passageiros(struct passageiro vetor[], int n, struct estatisticas *e);
+
+#endif

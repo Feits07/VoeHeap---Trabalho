@@ -1,0 +1,269 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "heap.h"
+#include "algoritmos.h"
+
+
+void troca_passageiros(struct passageiro *a, struct passageiro *b)
+{
+  struct passageiro auxiliar = *a;
+  *a = *b;
+  *b = auxiliar;
+}
+
+
+void sacodeheap_vetor(struct passageiro vetor[], int n, int indice, struct estatisticas *e)
+{ //função auxiliar focada apenas em ordenar partes não organizadas do vetor
+  
+  if (vetor == NULL || n <= 0 || indice < 0 || indice >= n)
+    return;
+
+  while (2 * indice + 1 < n)
+  {
+    int maior = 2 * indice + 1;
+    int direita = maior + 1;
+
+    if (direita < n)
+    {
+      if (e != NULL)
+        e->comparacoes++;
+
+      if (vetor[direita].prioridade >vetor[maior].prioridade)
+        maior = direita;
+    }
+    if (e != NULL)
+      e->comparacoes++;
+    if (vetor[indice].prioridade >= vetor[maior].prioridade)
+      break;
+
+    troca_passageiros(&vetor[indice], &vetor[maior]);
+
+    if (e != NULL)
+      e->trocas++;
+    indice = maior;
+  }
+}
+
+
+void sacodeheap(struct heap *heap, int indice)
+{//função pública(presente na biblioteca) focada em restaurar o max-heap a partir do indice informado
+  if (heap == NULL || heap->elementos == NULL)
+    return;
+
+  sacodeheap_vetor(heap->elementos, heap->tam, indice, NULL);
+}
+
+
+struct heap* inicheap(int capacidade)
+{
+  if (capacidade <= 0)
+    return(NULL);
+
+  struct heap *heap = (struct heap*) malloc(sizeof(struct heap)); // Aloca memória para o heap
+  if (heap == NULL)
+    return(NULL);
+
+  heap->elementos = (struct passageiro*) malloc((size_t)capacidade * sizeof(struct passageiro)); // Aloca memória para os passageiros
+  if (heap->elementos == NULL)
+  {
+    free(heap);
+    return(NULL);
+  }
+
+  heap->capacidade = capacidade; // Atribuições do heap pós inicialização
+  heap->tam = 0;
+
+  printf("Heap iniciado com tamanho maximo de %d elementos.\n\n", capacidade);
+
+  return(heap);
+}
+
+
+void destroiheap(struct heap *heap) // Libera toda a memória utilizada pelo heap
+{
+  if (heap != NULL)
+  {
+    if (heap->elementos != NULL)
+      free(heap->elementos);
+
+    free(heap);
+    printf("|HEAP DESTRUIDO EMBARQUE ENCERRADO|\n\n");
+    printf("|_________________________________|");
+  }
+}
+
+
+int insereheap(struct heap *heap, const char *nome)
+{
+  if (heap == NULL || nome == NULL)
+    return(0); // Retorna 0 em casos de erro
+
+  if (heap->tam >= heap->capacidade){
+    printf("ERRO: Impossivel inserir elemento, Heap com capacidade maxima\n\n");
+    return(0);
+  }
+
+  size_t tamanho = strlen(nome);
+
+  if (tamanho == 0 || tamanho >= TAM_NOME){
+    printf("ERRO: Impossivel inserir elemento. Tamanho do nome invalido.\n");
+    return(0);
+  }
+
+  int prioridade = sorteianum(1, heap->capacidade); //Gera prioridade entre 1 e a capacidade do avião
+  int indice = heap->tam;
+
+  strcpy(heap->elementos[indice].nome, nome); //Insere o nome
+  heap->elementos[indice].prioridade = prioridade; //Insere a prioridade
+  printf("Passageiro inserido - Nome: %s | Prioridade: %d\n", heap->elementos[indice].nome, heap->elementos[indice].prioridade);
+
+  heap->tam++;
+  heapfy(heap, indice, NULL);
+
+  return(1); // Retorna 1 em casos de sucesso
+}
+
+
+void heapfy (struct heap *heap,int indice,struct estatisticas *e)
+{
+  int pai; // pai se refere ao elemento no topo de um dos segmentos
+
+  if (e != NULL)
+  {
+    e->comparacoes = 0;
+    e->trocas = 0;
+  }
+
+  if (heap == NULL || heap->elementos == NULL || indice < 0 || indice >= heap->tam)
+    return;
+
+  while (indice > 0)
+  {
+    pai = (indice - 1) / 2;
+    if (e != NULL)
+      e->comparacoes++;
+    if (heap->elementos[indice].prioridade <= heap->elementos[pai].prioridade)
+      break;
+
+    troca_passageiros(&heap->elementos[indice], &heap->elementos[pai]);
+    if (e != NULL)
+      e->trocas++;
+    indice = pai;
+  }
+
+  if (e != NULL)
+  {
+    printf(" | VETOR HEAPFICADO!                     |\n");
+    printf(" | TROCAS REALIZADAS: %d trocas           |\n", e->trocas);
+    printf(" | COMPARACOES REALIZADAS: %d comparacoes |\n\n", e->comparacoes);
+  }
+}
+
+
+struct passageiro removeheap(struct heap *heap)
+{
+  struct passageiro erro = {"", -1};
+
+  if (heap == NULL || heap->tam == 0)
+  {
+    printf("ERRO: SEM PASSAGEIROS\n");
+    return(erro); // Retorna vazio em casos de erro
+  }
+
+  struct passageiro removido = heap->elementos[0]; // Guarda o passageiro de maior prioridade
+  heap->tam--;
+
+
+  if (heap->tam > 0)
+  {
+    heap->elementos[0] = heap->elementos[heap->tam]; // Coloca o último elemento na raiz
+    sacodeheap(heap, 0); // Reorganiza o heap para baixo
+  }
+
+  printf("Passageiro removido - Nome: %s | Prioridade: %d\n", removido.nome, removido.prioridade);
+  return(removido);
+}
+
+
+int checaheap(struct heap *heap)
+{
+  if (heap == NULL || heap->elementos == NULL)
+    return(0);
+
+  int i;
+
+  for (i = 0; i < heap->tam / 2; i++)
+  {
+    int esq = 2 * i + 1; // Define os 2 elementos "filhos" de i
+    int dir = 2 * i + 2;
+
+    if (esq < heap->tam && heap->elementos[i].prioridade < heap->elementos[esq].prioridade)
+    {
+      printf("| VETOR CHECADO, NAO EH UM HEAP |\n");
+      return(0); // Se quebra a propriedade, retorna 0
+    }
+
+    if (dir < heap->tam && heap->elementos[i].prioridade < heap->elementos[dir].prioridade)
+    {
+      printf("| VETOR CHECADO, NAO EH UM HEAP |\n");
+      return(0);
+    }
+  }
+  
+  printf("| VETOR CHECADO, EH UM HEAP |\n");
+  return(1); // Retorna 1 se for sucedido
+}
+
+
+void imprimeheap(struct heap *heap)
+{
+  if (heap == NULL)
+  {
+    printf("ERRO: Heap nao inicializado\n");
+    return;
+  }
+
+  if (heap->tam == 0)
+  {
+    printf("ERRO: Sem passageiros\n");
+    return;
+  }
+
+  printf("LISTA DE PASSAGEIROS:\n");
+
+  for (int i = 0; i < heap->tam; i++)
+    printf("[%d] Nome: %s | Prioridade: %d\n", i, heap->elementos[i].nome, heap->elementos[i].prioridade);
+}
+
+
+void heapsort_passageiros(struct passageiro vetor[], int n,struct estatisticas *e)
+{
+  if (e != NULL)
+  {
+    e->comparacoes = 0;
+    e->trocas = 0;
+  }
+
+  if (vetor == NULL || n <= 1)
+    return;
+
+  for (int i = n / 2 - 1; i >= 0; i--) // Constroi max-heap
+    sacodeheap_vetor(vetor, n, i, e);
+
+  for (int i = n - 1; i > 0; i--)
+  {
+    troca_passageiros(&vetor[0], &vetor[i]); //atribui o maior elemento para a ultima posição ativa
+    if (e != NULL)
+      e->trocas++;
+
+    sacodeheap_vetor(vetor, i, 0, e);
+  }
+  if (e != NULL)
+  {
+    printf(" | VETOR ORDENADO!                       |\n");
+    printf(" | TROCAS REALIZADAS: %d trocas           |\n", e->trocas);
+    printf(" | COMPARACOES REALIZADAS: %d comparacoes |\n", e->comparacoes);
+  }
+}

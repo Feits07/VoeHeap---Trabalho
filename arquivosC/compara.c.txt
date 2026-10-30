@@ -1,0 +1,81 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include "algoritmos.h"
+#define MAX 1000
+
+const char* compara_algoritmos(int tam)
+{
+    int *v = (int *)malloc(tam * sizeof(int));
+    int *v_heap = (int *)malloc(tam * sizeof(int));
+    int *v_quick = (int *)malloc(tam * sizeof(int));
+    int *v_insert = (int *)malloc(tam * sizeof(int));
+
+    if (!v || !v_heap || !v_quick || !v_insert) {
+        free(v); free(v_heap); free(v_quick); free(v_insert);
+        return NULL;
+    }
+
+
+    for (int i = 0; i < tam; i++){
+        v[i] = sorteianum(1, MAX);
+    }
+
+    for (int i = 0; i < tam; i++){
+        v_heap[i] = v[i];
+        v_quick[i] = v[i];
+        v_insert[i] = v[i];
+    }
+
+    struct estatisticas est_heap = {0, 0};
+    struct estatisticas est_quick = {0, 0};
+    struct estatisticas est_insert = {0, 0};
+    
+    printf("================ Comparacoes em Vetor Aleatorio (1024 itens) ================ \n\n");
+
+    // --- HEAPSORT ---
+    printf("======= HeapSort ==========\n");
+    heapsort(v_heap, tam, &est_heap);
+    printf("%d Comparacoes\n", est_heap.comparacoes);
+    printf("%d Trocas\n\n", est_heap.trocas);
+
+    // --- QUICKSORT ---
+    printf("======= QuickSort ==========\n");
+    quicksort(v_quick, 0, tam - 1, &est_quick);  
+    printf("%d Comparacoes\n", est_quick.comparacoes);
+    printf("%d Trocas\n\n", est_quick.trocas);
+
+    // --- INSERTION SORT ---
+    printf("======= Insertion ==========\n");
+    insertsort(v_insert, tam, &est_insert);
+    printf("%d Comparacoes\n", est_insert.comparacoes);
+    printf("%d Trocas\n\n", est_insert.trocas);
+
+    // Avaliação do melhor
+    long long total_heap = est_heap.comparacoes + est_heap.trocas;
+    long long total_quick = est_quick.comparacoes + est_quick.trocas;
+    long long total_insert = est_insert.comparacoes + est_insert.trocas;
+
+    const char *melhor = "Heapsort";
+    long long menor_ops = total_heap;
+
+    if (total_quick < menor_ops) {
+        menor_ops = total_quick;
+        melhor = "Quicksort";
+    }
+    if (total_insert < menor_ops) {
+        menor_ops = total_insert;
+        melhor = "Insertion";
+    }
+
+    printf("=============================================================================\n");
+    printf(" O melhor algoritmo nesse teste foi: %s (Total de operacoes: %d)\n", melhor, menor_ops);
+    printf("=============================================================================\n");
+
+    free(v);
+    free(v_heap);
+    free(v_quick);
+    free(v_insert);
+
+    return melhor;
+}
